@@ -1,0 +1,9 @@
+Django>=4.2,<5.0         # Latest stable version of Django
+django-crispy-forms      # For styling forms (if used)
+crispy-bootstrap4        # Bootstrap 4 forms (optional)
+Pillow                   # For handling images (if any)
+gunicorn                 # For production deployment
+psycopg2                 # For PostgreSQL (if using PostgreSQL DB)
+mysqlclient              # For MySQL (if using MySQL DB)
+dj-database-url          # For configuring DB via URL (optional)
+whitenoise               # To serve static files in production
