@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - Blog Application{% endblock %}
+{% block content %}
+<section class="hero">
+    <img src="{% static 'images/blog_opportunities.jpg' %}" alt="Blogging Image">
+    <h1>Welcome to the Blog Application</h1>
+{% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}! Start writing your blogs.</p>
+    <a href="{% url 'create_blog' %}" class="btn">Write a New Blog</a>
+    <a href="{% url 'logout' %}" class="btn">Logout</a>
+{% else %}
+    <p>Read amazing blogs or join us to create your own!</p>
+    
+
+
+{% endif %}
+</section>
+<section class="blog-list">
+    <h2>Latest Blog Posts</h2>
+{% if blog_posts %}
+    <div class="blogs-container">
+        {% for blog in blog_posts %}
+            <div class="blog-card">
+                <h3>{{ blog.title }}</h3>
+                <p>{{ blog.content|truncatewords:30 }}</p>
+                <div class="blog-meta">
+                    <span>By {{ blog.author.username }}</span>
+                    <span>{{ blog.created_at|date:"F d, Y" }}</span>
+                </div>
+                <a href="{% url 'blog_detail' blog.pk %}" class="btn">Read More</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="view-all">
+        <a href="{% url 'blog_list' %}" class="btn">View All Blogs</a>
+    </div>
+{% else %}
+    <p>No blogs have been published yet.</p>
+{% endif %}
+</section>
+{% endblock %}

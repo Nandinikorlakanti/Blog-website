@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="create-blog-container container mt-4">
+    <div class="blog-creation-card shadow-lg p-5 bg-white rounded-lg">
+        <h2 class="create-blog-title text-center mb-4">Create a New Blog Post</h2>
+        
+        <form method="POST" class="blog-creation-form">
+            {% csrf_token %}
+            
+            <div class="form-wrapper">
+                {% for field in form %}
+                    <div class="form-group mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions d-flex justify-content-between align-items-center mt-4">
+                <button type="submit" class="btn btn-publish btn-success">
+                    <i class="fas fa-paper-plane mr-2"></i>Publish Blog
+                </button>
+                <a href="{% url 'blog_list' %}" class="btn btn-cancel btn-secondary">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --text-color: #2c3e50;
+    --background-light: #f8f9fa;
+    --form-border-color: #e0e0e0;
+}
+
+.create-blog-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.blog-creation-card {
+    border: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.blog-creation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1) !important;
+}
+
+.create-blog-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+}
+
+.blog-creation-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.blog-creation-form label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.blog-creation-form input, 
+.blog-creation-form textarea, 
+.blog-creation-form select {
+    border: 1px solid var(--form-border-color);
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.blog-creation-form input:focus, 
+.blog-creation-form textarea:focus, 
+.blog-creation-form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.btn-publish {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-publish:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.btn-cancel {
+    background-color: #95a5a6;
+    border-color: #95a5a6;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-cancel:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+.invalid-feedback {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .blog-creation-card {
+        padding: 2rem 1rem !important;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+</style>
+{% endblock %}

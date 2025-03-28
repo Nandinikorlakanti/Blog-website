@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container blog-details-container mt-4">
+    <div class="blog-details-card shadow-lg p-5 bg-white rounded-lg">
+        <h2 class="blog-title text-primary mb-3">{{ blog_post.title }}</h2>
+Copy    <div class="blog-meta d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div class="author-info d-flex align-items-center">
+            <div class="author-avatar mr-3">
+                <img src="/api/placeholder/50/50" alt="{{ blog_post.author }}" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+            </div>
+            <div>
+                <h6 class="mb-0 text-muted">{{ blog_post.author }}</h6>
+                <small class="text-muted">{{ blog_post.created_at|date:"F d, Y" }}</small>
+            </div>
+        </div>
+        <div class="blog-read-time text-muted">
+            <i class="fas fa-clock mr-2"></i>5 min read
+        </div>
+    </div>
+
+    <div class="blog-content mb-4">
+        <p class="lead text-dark">{{ blog_post.content }}</p>
+    </div>
+
+    <div class="blog-actions d-flex justify-content-between align-items-center">
+        <div class="action-buttons">
+            {% if user == blog_post.author %}
+                <a href="{% url 'edit_blog' blog_post.pk %}" class="btn btn-warning btn-edit mr-2">
+                    <i class="fas fa-edit mr-2"></i>Edit
+                </a>
+                <a href="{% url 'delete_blog' blog_post.pk %}" class="btn btn-danger btn-delete">
+                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                </a>
+            {% endif %}
+        </div>
+        
+        <a href="{% url 'blog_list' %}" class="btn btn-secondary btn-back">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Blogs
+        </a>
+    </div>
+</div>
+</div>
+<style>
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --text-color: #2c3e50;
+    --background-light: #f8f9fa;
+}
+
+.blog-details-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.blog-details-card {
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.blog-details-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1) !important;
+}
+
+.blog-title {
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: -1px;
+}
+
+.blog-meta {
+    border-bottom: 2px solid var(--background-light) !important;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    border-color: #f39c12;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: #d35400;
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.blog-content .lead {
+    line-height: 1.8;
+    color: var(--text-color);
+}
+</style>
+{% endblock %}
